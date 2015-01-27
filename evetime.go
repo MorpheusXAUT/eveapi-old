@@ -14,6 +14,11 @@ func (c eveTime) String() string {
 	return c.Format(dateFormat)
 }
 func (c *eveTime) UnmarshalXMLAttr(attr xml.Attr) error {
+	if len(attr.Value) == 0 {
+		*c = eveTime{time.Unix(0, 0)}
+		return nil
+	}
+
 	parse, err := time.Parse(dateFormat, attr.Value)
 	if err != nil {
 		return err
@@ -24,6 +29,12 @@ func (c *eveTime) UnmarshalXMLAttr(attr xml.Attr) error {
 func (c *eveTime) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	var v string
 	d.DecodeElement(&v, &start)
+
+	if len(v) == 0 {
+		*c = eveTime{time.Unix(0, 0)}
+		return nil
+	}
+
 	parse, err := time.Parse(dateFormat, v)
 	if err != nil {
 		return nil
