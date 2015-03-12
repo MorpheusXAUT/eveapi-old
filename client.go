@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strconv"
 )
 
 const (
@@ -18,7 +19,7 @@ const (
 )
 
 type Key struct {
-	ID    string
+	ID    int64
 	VCode string
 }
 
@@ -34,13 +35,13 @@ func Simple(key Key) *API {
 }
 
 type APIResult struct {
-	Version     int       `xml:"version,attr"`
+	Version     int64     `xml:"version,attr"`
 	CurrentTime eveTime   `xml:"currentTime"`
 	Error       *APIError `xml:"error,omitempty"`
 	CachedUntil eveTime   `xml:"cachedUntil"`
 }
 type APIError struct {
-	Code    int    `xml:"code,attr"`
+	Code    int64  `xml:"code,attr"`
 	Message string `xml:",chardata"`
 }
 
@@ -52,7 +53,7 @@ func (api API) Call(path string, args url.Values, output interface{}) error {
 	if args == nil {
 		args = url.Values{}
 	}
-	args.Set("keyID", api.APIKey.ID)
+	args.Set("keyID", strconv.FormatInt(api.APIKey.ID, 10))
 	args.Set("vCode", api.APIKey.VCode)
 	resp, err := http.PostForm(uri, args)
 	if err != nil {

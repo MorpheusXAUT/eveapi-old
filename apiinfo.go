@@ -9,7 +9,7 @@ const (
 
 // APIInfo contains information about the current API key
 type APIInfo struct {
-	AccessMask string   `xml:"accessMask,attr"`
+	AccessMask int64    `xml:"accessMask,attr"`
 	Type       string   `xml:"type,attr"`
 	Expires    *eveTime `xml:"expires,attr"`
 }

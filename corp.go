@@ -13,9 +13,9 @@ const (
 )
 
 type Contact struct {
-	ID       string `xml:"contactID,attr"`
+	ID       int64  `xml:"contactID,attr"`
 	Name     string `xml:"contactName,attr"`
-	Standing int    `xml:"standing,attr"`
+	Standing int64  `xml:"standing,attr"`
 }
 
 type ContactSubList struct {
@@ -57,8 +57,8 @@ func (c ContactList) Alliance() []Contact {
 type AccountBalance struct {
 	APIResult
 	Accounts []struct {
-		ID      int     `xml:"accountID,attr"`
-		Key     int     `xml:"accountKey,attr"`
+		ID      int64   `xml:"accountID,attr"`
+		Key     int64   `xml:"accountKey,attr"`
 		Balance float64 `xml:"balance,attr"`
 	} `xml:"result>rowset>row"`
 }
@@ -82,13 +82,13 @@ type StarbaseList struct {
 
 type Starbase struct {
 	ID              int64   `xml:"itemID,attr"`
-	TypeID          int     `xml:"typeID,attr"`
-	LocationID      int     `xml:"locationID,attr"`
-	MoonID          int     `xml:"moonID,attr"`
-	State           int     `xml:"state,attr"`
+	TypeID          int64   `xml:"typeID,attr"`
+	LocationID      int64   `xml:"locationID,attr"`
+	MoonID          int64   `xml:"moonID,attr"`
+	State           int64   `xml:"state,attr"`
 	StateTimestamp  eveTime `xml:"stateTimestamp,attr"`
 	OnlineTimestamp eveTime `xml:"onlineTimestamp,attr"`
-	StandingOwnerID int     `xml:"standingOwnerID,attr"`
+	StandingOwnerID int64   `xml:"standingOwnerID,attr"`
 }
 
 func (api API) CorpStarbaseList() (*StarbaseList, error) {
@@ -105,25 +105,25 @@ func (api API) CorpStarbaseList() (*StarbaseList, error) {
 
 type StarbaseDetails struct {
 	APIResult
-	State           int     `xml:"result>state"`
+	State           int64   `xml:"result>state"`
 	StateTimestamp  eveTime `xml:"result>stateTimestamp"`
 	OnlineTimestamp eveTime `xml:"result>onlineTimestamp"`
 	GeneralSettings struct {
-		UsageFlags              int  `xml:"usageFlags"`
-		DeployFlags             int  `xml:"deployFlags"`
-		AllowCorporationMembers bool `xml:"allowCorporationMembers"`
-		AllowAllianceMembers    bool `xml:"allowAllianceMembers"`
+		UsageFlags              int64 `xml:"usageFlags"`
+		DeployFlags             int64 `xml:"deployFlags"`
+		AllowCorporationMembers bool  `xml:"allowCorporationMembers"`
+		AllowAllianceMembers    bool  `xml:"allowAllianceMembers"`
 	} `xml:"result>generalSettings"`
 	CombatSettings struct {
 		UseStandingsFrom struct {
-			OwnerID int `xml:"ownerID,attr"`
+			OwnerID int64 `xml:"ownerID,attr"`
 		} `xml:"useStandingsFrom"`
 		OnStandingDrop struct {
-			Standing int `xml:"standing,attr"`
+			Standing int64 `xml:"standing,attr"`
 		} `xml:"onStandingDrop"`
 		OnStatusDrop struct {
-			Enabled  bool `xml:"enabled,attr"`
-			Standing int  `xml:"standing,attr"`
+			Enabled  bool  `xml:"enabled,attr"`
+			Standing int64 `xml:"standing,attr"`
 		} `xml:"onStatusDrop"`
 		OnAgression struct {
 			Enabled bool `xml:"enabled,attr"`
@@ -133,8 +133,8 @@ type StarbaseDetails struct {
 		} `xml:"onCorporationWar"`
 	} `xml:"result>combatSettings"`
 	Fuel []struct {
-		TypeID   int `xml:"typeID,attr"`
-		Quantity int `xml:"quantity,attr"`
+		TypeID   int64 `xml:"typeID,attr"`
+		Quantity int64 `xml:"quantity,attr"`
 	} `xml:"result>rowset>row"`
 }
 

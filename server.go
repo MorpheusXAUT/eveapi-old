@@ -6,8 +6,8 @@ const (
 
 type ServerStatusResult struct {
 	APIResult
-	Open          bool `xml:"result>serverOpen"`
-	OnlinePlayers int  `xml:"result>onlinePlayers"`
+	Open          bool  `xml:"result>serverOpen"`
+	OnlinePlayers int64 `xml:"result>onlinePlayers"`
 }
 
 func (api API) ServerStatus() (*ServerStatusResult, error) {

@@ -9,11 +9,11 @@ const (
 
 // Character contains information about a specific character
 type Character struct {
-	ID              string `xml:"characterID,attr"`
+	ID              int64  `xml:"characterID,attr"`
 	Name            string `xml:"name,attr"`
-	CorporationID   string `xml:"corporationID,attr"`
+	CorporationID   int64  `xml:"corporationID,attr"`
 	CorporationName string `xml:"corporationName,attr"`
-	AllianceID      string `xml:"allianceID,attr"`
+	AllianceID      int64  `xml:"allianceID,attr"`
 	AllianceName    string `xml:"allianceName,attr"`
 }
 

@@ -29,11 +29,11 @@ func (api API) CharAccountBalances(charID string) (*AccountBalance, error) {
 }
 
 type SkillQueueRow struct {
-	Position  int     `xml:"queuePosition,attr"`
-	TypeID    int     `xml:"typeID,attr"`
-	Level     int     `xml:"level,attr"`
-	StartSP   int     `xml:"startSP,attr"`
-	EndSP     int     `xml:"endSP,attr"`
+	Position  int64   `xml:"queuePosition,attr"`
+	TypeID    int64   `xml:"typeID,attr"`
+	Level     int64   `xml:"level,attr"`
+	StartSP   int64   `xml:"startSP,attr"`
+	EndSP     int64   `xml:"endSP,attr"`
 	StartTime eveTime `xml:"startTime,attr"`
 	EndTime   eveTime `xml:"endTime,attr"`
 }

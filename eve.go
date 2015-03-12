@@ -3,6 +3,7 @@ package eveapi
 import (
 	"errors"
 	"net/url"
+	"strconv"
 )
 
 const (
@@ -35,8 +36,8 @@ func (api API) Name2ID(char string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	if len(names.Names) == 1 && names.Names[0].ID != "0" {
-		return names.Names[0].ID, nil
+	if len(names.Names) == 1 && names.Names[0].ID != 0 {
+		return strconv.FormatInt(names.Names[0].ID, 10), nil
 	} else {
 		return "", errors.New("Name2ID: No such character")
 	}
@@ -56,7 +57,7 @@ func (api API) Names2ID(char string) ([]CharacterNameRow, error) {
 
 // CharacterNameRow represents a single row in CharacterNameResult
 type CharacterNameRow struct {
-	ID   string `xml:"characterID,attr"`
+	ID   int64  `xml:"characterID,attr"`
 	Name string `xml:"name,attr"`
 }
 type CharacterNameResult struct {
@@ -79,7 +80,7 @@ func (api API) RefTypes() (*RefTypes, error) {
 type RefTypes struct {
 	APIResult
 	RefTypes []struct {
-		RefTypeID   string `xml:"refTypeID,attr"`
+		RefTypeID   int64  `xml:"refTypeID,attr"`
 		RefTypeName string `xml:"refTypeName,attr"`
 	} `xml:"result>rowset>row"`
 }
@@ -101,10 +102,10 @@ type AllianceList struct {
 	Alliances []struct {
 		Name           string  `xml:"name,attr"`
 		Ticker         string  `xml:"shortName,attr"`
-		AllianceID     string  `xml:"allianceID,attr"`
-		ExecutorCorpID string  `xml:"executorCorpID,attr"`
-		MemberCount    int     `xml:"memberCount,attr"`
-		CorporationID  string  `xml:"corporationID,attr"`
+		AllianceID     int64   `xml:"allianceID,attr"`
+		ExecutorCorpID int64   `xml:"executorCorpID,attr"`
+		MemberCount    int64   `xml:"memberCount,attr"`
+		CorporationID  int64   `xml:"corporationID,attr"`
 		Created        eveTime `xml:"startDate,attr"`
 	} `xml:"result>rowset>row"`
 }
