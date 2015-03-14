@@ -77,7 +77,7 @@ func (api API) CorpAccountBalances() (*AccountBalance, error) {
 
 type StarbaseList struct {
 	APIResult
-	Starbases []Starbase `xml:"result>rowset>row"`
+	Starbases []*Starbase `xml:"result>rowset>row"`
 }
 
 type Starbase struct {
