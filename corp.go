@@ -6,11 +6,46 @@ import (
 )
 
 const (
-	CorpContactListURL     = "/corp/ContactList.xml.aspx"
-	CorpAccountBalanceURL  = "/corp/AccountBalance.xml.aspx"
-	CorpStarbaseListURL    = "/corp/StarbaseList.xml.aspx"
-	CorpStarbaseDetailsURL = "/corp/StarbaseDetail.xml.aspx"
+	CorpCorporationSheetURL = "/corp/CorporationSheet.xml.aspx"
+	CorpContactListURL      = "/corp/ContactList.xml.aspx"
+	CorpAccountBalanceURL   = "/corp/AccountBalance.xml.aspx"
+	CorpStarbaseListURL     = "/corp/StarbaseList.xml.aspx"
+	CorpStarbaseDetailsURL  = "/corp/StarbaseDetail.xml.aspx"
 )
+
+type CorporationSheet struct {
+	APIResult
+	ID           int64  `xml:"result>corporationID"`
+	Name         string `xml:"result>corporationName"`
+	Ticker       string `xml:"result>ticker"`
+	CEOID        int64  `xml:"result>ceoID"`
+	CEOName      string `xml:"result>ceoName"`
+	StationID    int64  `xml:"result>stationID"`
+	StationName  string `xml:"result>stationName"`
+	Description  string `xml:"result>description"`
+	URL          string `xml:"result>url"`
+	AllianceID   int64  `xml:"result>allianceID"`
+	AllianceName string `xml:"result>allianceName"`
+	FactionID    int64  `xml:"result>factionID"`
+	TaxRate      int64  `xml:"result>taxRate"`
+	MemberCount  int64  `xml:"result>memberCount"`
+	Shares       int64  `xml:"result>shares"`
+	// Logo ignored
+}
+
+func (api API) CorpCorporationSheet(corporationID int64) (*CorporationSheet, error) {
+	output := CorporationSheet{}
+	args := url.Values{}
+	args.Set("corporationID", strconv.FormatInt(corporationID, 10))
+	err := api.Call(CorpCorporationSheetURL, args, &output)
+	if err != nil {
+		return nil, err
+	}
+	if output.Error != nil {
+		return nil, output.Error
+	}
+	return &output, nil
+}
 
 type Contact struct {
 	ID       int64  `xml:"contactID,attr"`
